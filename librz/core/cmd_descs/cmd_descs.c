@@ -9985,6 +9985,14 @@ static const RzCmdDescHelp egg_show_config_help = {
 	.args = egg_show_config_args,
 };
 
+static const RzCmdDescArg help_args[] = {
+	{ 0 },
+};
+static const RzCmdDescHelp help_help = {
+	.summary = "Generic help",
+	.args = help_args,
+};
+
 static const RzCmdDescHelp H_help = {
 	.summary = "Rizin history commands.",
 };
@@ -18471,6 +18479,9 @@ RZ_IPI void rzshell_cmddescs_init(RzCore *core) {
 	RzCmdDesc *egg_show_config_cd = rz_cmd_desc_argv_new(core->rcmd, g_cd, "gS", rz_egg_show_config_handler, &egg_show_config_help);
 	rz_warn_if_fail(egg_show_config_cd);
 
+	RzCmdDesc *help_cd = rz_cmd_desc_argv_new(core->rcmd, root_cd, "help", rz_help_handler, &help_help);
+	rz_warn_if_fail(help_cd);
+
 	RzCmdDesc *H_cd = rz_cmd_desc_group_new(core->rcmd, root_cd, "H", rz_history_list_or_exec_handler, &history_list_or_exec_help, &H_help);
 	rz_warn_if_fail(H_cd);
 	RzCmdDesc *history_clear_cd = rz_cmd_desc_argv_new(core->rcmd, H_cd, "H-", rz_history_clear_handler, &history_clear_help);
@@ -18607,7 +18618,7 @@ RZ_IPI void rzshell_cmddescs_init(RzCore *core) {
 	rz_warn_if_fail(cmd_info_cur_segment_cd);
 	rz_cmd_desc_set_default_mode(cmd_info_cur_segment_cd, RZ_OUTPUT_MODE_TABLE);
 
-	RzCmdDesc *cmd_info_hashes_cd = rz_cmd_desc_argv_state_new(core->rcmd, i_cd, "it", RZ_OUTPUT_MODE_STANDARD | RZ_OUTPUT_MODE_JSON, rz_cmd_info_hashes_handler, &cmd_info_hashes_help);
+	RzCmdDesc *cmd_info_hashes_cd = rz_cmd_desc_argv_state_new(core->rcmd, i_cd, "iT", RZ_OUTPUT_MODE_STANDARD | RZ_OUTPUT_MODE_JSON, rz_cmd_info_hashes_handler, &cmd_info_hashes_help);
 	rz_warn_if_fail(cmd_info_hashes_cd);
 
 	RzCmdDesc *cmd_info_versions_cd = rz_cmd_desc_argv_state_new(core->rcmd, i_cd, "iV", RZ_OUTPUT_MODE_STANDARD | RZ_OUTPUT_MODE_JSON, rz_cmd_info_versions_handler, &cmd_info_versions_help);
